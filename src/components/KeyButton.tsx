@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 type KeyButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   children: ReactNode;
-  variant?: 'number' | 'operator';
+  variant?: 'control' | 'number' | 'operator';
 };
 
 export function KeyButton({
@@ -11,7 +11,7 @@ export function KeyButton({
   variant = 'number',
   ...props
 }: KeyButtonProps) {
-  const variantClass = variant === 'operator' ? 'key-button--operator' : '';
+  const variantClass = variant === 'number' ? '' : `key-button--${variant}`;
 
   return (
     <button className={`key-button ${variantClass} ${className}`.trim()} type="button" {...props}>
