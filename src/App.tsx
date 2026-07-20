@@ -1,3 +1,5 @@
+import { initialCalculatorState } from './calculator/state';
+import { CalculatorDisplay } from './components/CalculatorDisplay';
 import { CalculatorLayout } from './components/CalculatorLayout';
 
 export function App() {
@@ -5,7 +7,7 @@ export function App() {
 
   return (
     <CalculatorLayout
-      display={<span className="calculator-display__value">0</span>}
+      display={<CalculatorDisplay state={initialCalculatorState} />}
       keypad={
         <>
           {keys.map((key) => (
