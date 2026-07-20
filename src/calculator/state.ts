@@ -1,4 +1,12 @@
-export type CalculatorOperator = '+' | '-' | 'x' | '/';
+import {
+  errorEntry,
+  evaluateOperation,
+  formatValue,
+  type CalculatorOperator,
+  type EvaluationResult,
+} from './engine';
+
+export type { CalculatorOperator } from './engine';
 
 export type CalculatorState = {
   currentEntry: string;
@@ -19,7 +27,7 @@ export function enterDigit(state: CalculatorState, digit: string): CalculatorSta
     return state;
   }
 
-  if (state.shouldReplaceEntry || state.currentEntry === 'Error') {
+  if (state.shouldReplaceEntry || state.currentEntry === errorEntry) {
     return {
       ...state,
       currentEntry: digit,
@@ -37,7 +45,7 @@ export function chooseOperator(
   state: CalculatorState,
   operator: CalculatorOperator,
 ): CalculatorState {
-  if (state.currentEntry === 'Error') {
+  if (state.currentEntry === errorEntry) {
     return {
       ...initialCalculatorState,
       pendingOperator: operator,
@@ -46,18 +54,13 @@ export function chooseOperator(
   }
 
   if (state.pendingOperator && state.accumulatedValue !== null && !state.shouldReplaceEntry) {
-    const resolvedValue = evaluate(
+    const result = evaluateOperation(
       state.accumulatedValue,
       Number(state.currentEntry),
       state.pendingOperator,
     );
 
-    return {
-      currentEntry: formatEntry(resolvedValue),
-      pendingOperator: operator,
-      accumulatedValue: Number.isFinite(resolvedValue) ? resolvedValue : null,
-      shouldReplaceEntry: true,
-    };
+    return nextOperationState(result, operator);
   }
 
   return {
@@ -69,44 +72,56 @@ export function chooseOperator(
 }
 
 export function pressEquals(state: CalculatorState): CalculatorState {
-  if (!state.pendingOperator || state.accumulatedValue === null || state.currentEntry === 'Error') {
+  if (
+    !state.pendingOperator ||
+    state.accumulatedValue === null ||
+    state.currentEntry === errorEntry
+  ) {
     return {
       ...state,
       shouldReplaceEntry: true,
     };
   }
 
-  const resolvedValue = evaluate(
+  const result = evaluateOperation(
     state.accumulatedValue,
     Number(state.currentEntry),
     state.pendingOperator,
   );
 
+  if (!result.ok) {
+    return errorState();
+  }
+
   return {
-    currentEntry: formatEntry(resolvedValue),
+    currentEntry: formatValue(result.value),
     pendingOperator: null,
     accumulatedValue: null,
     shouldReplaceEntry: true,
   };
 }
 
-function evaluate(leftOperand: number, rightOperand: number, operator: CalculatorOperator): number {
-  switch (operator) {
-    case '+':
-      return leftOperand + rightOperand;
-    case '-':
-      return leftOperand - rightOperand;
-    case 'x':
-      return leftOperand * rightOperand;
-    case '/':
-      return leftOperand / rightOperand;
+function nextOperationState(
+  result: EvaluationResult,
+  pendingOperator: CalculatorOperator,
+): CalculatorState {
+  if (!result.ok) {
+    return errorState();
   }
+
+  return {
+    currentEntry: formatValue(result.value),
+    pendingOperator,
+    accumulatedValue: result.value,
+    shouldReplaceEntry: true,
+  };
 }
 
-function formatEntry(value: number): string {
-  if (!Number.isFinite(value)) {
-    return 'Error';
-  }
-
-  return Number.isInteger(value) ? String(value) : String(Number(value.toPrecision(12)));
+function errorState(): CalculatorState {
+  return {
+    currentEntry: errorEntry,
+    pendingOperator: null,
+    accumulatedValue: null,
+    shouldReplaceEntry: true,
+  };
 }
