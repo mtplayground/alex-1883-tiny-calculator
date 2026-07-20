@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+.env.local
+.gh_token
+.DS_Store
+npm-debug.log*
