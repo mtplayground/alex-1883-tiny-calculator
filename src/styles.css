@@ -58,7 +58,11 @@
   }
 
   .calculator-display {
-    @apply flex min-h-[4.75rem] items-end justify-end overflow-hidden rounded-control bg-display px-4 py-3 text-right text-white sm:min-h-24;
+    @apply flex min-h-[4.75rem] min-w-0 flex-col items-end justify-end overflow-hidden rounded-control bg-display px-4 py-3 text-right text-white sm:min-h-24;
+  }
+
+  .calculator-display__meta {
+    @apply block h-5 max-w-full truncate text-sm font-medium text-white/60;
   }
 
   .calculator-display__value {
