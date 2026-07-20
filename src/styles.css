@@ -73,8 +73,16 @@
     @apply min-w-0;
   }
 
+  .calculator-keypad-grid {
+    @apply grid grid-cols-[minmax(0,3fr)_minmax(3rem,1fr)] gap-2 sm:gap-3;
+  }
+
   .number-keypad {
     @apply grid grid-cols-3 gap-2 sm:gap-3;
+  }
+
+  .operator-keypad {
+    @apply grid grid-rows-4 gap-2 sm:gap-3;
   }
 
   .key-button {

@@ -1,4 +1,4 @@
-import { formatValue } from '../calculator/engine';
+import { formatOperator, formatValue } from '../calculator/engine';
 import type { CalculatorState } from '../calculator/state';
 
 type CalculatorDisplayProps = {
@@ -8,7 +8,7 @@ type CalculatorDisplayProps = {
 export function CalculatorDisplay({ state }: CalculatorDisplayProps) {
   const pendingExpression =
     state.pendingOperator && state.accumulatedValue !== null
-      ? `${formatValue(state.accumulatedValue)} ${state.pendingOperator}`
+      ? `${formatValue(state.accumulatedValue)} ${formatOperator(state.pendingOperator)}`
       : '';
 
   return (

@@ -45,6 +45,19 @@ export function formatValue(value: number): string {
   return Number.isInteger(value) ? String(value) : String(Number(value.toPrecision(12)));
 }
 
+export function formatOperator(operator: CalculatorOperator): string {
+  switch (operator) {
+    case '+':
+      return '+';
+    case '-':
+      return '−';
+    case 'x':
+      return '×';
+    case '/':
+      return '÷';
+  }
+}
+
 function calculate(
   leftOperand: number,
   rightOperand: number,
