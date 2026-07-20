@@ -69,12 +69,16 @@
     @apply block max-w-full truncate text-4xl font-semibold leading-none sm:text-5xl;
   }
 
-  .key-grid {
-    @apply grid grid-cols-4 gap-2 sm:gap-3;
+  .calculator-keypad {
+    @apply min-w-0;
+  }
+
+  .number-keypad {
+    @apply grid grid-cols-3 gap-2 sm:gap-3;
   }
 
   .key-button {
-    @apply flex aspect-square min-h-12 items-center justify-center rounded-control border border-black/10 bg-key text-lg font-semibold text-ink shadow-flat transition-colors hover:bg-key-hover focus:outline-none focus:ring-2 focus:ring-operator focus:ring-offset-2 focus:ring-offset-canvas sm:text-xl;
+    @apply flex aspect-square min-h-12 items-center justify-center rounded-control border border-black/10 bg-key text-lg font-semibold text-ink shadow-flat transition duration-100 hover:bg-key-hover active:translate-y-px active:shadow-none focus:outline-none focus:ring-2 focus:ring-operator focus:ring-offset-2 focus:ring-offset-canvas sm:text-xl;
   }
 
   .key-button--operator {
