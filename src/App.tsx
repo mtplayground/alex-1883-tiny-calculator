@@ -1,25 +1,20 @@
-import { initialCalculatorState } from './calculator/state';
+import { useState } from 'react';
+import { enterDecimalPoint, enterDigit, initialCalculatorState } from './calculator/state';
 import { CalculatorDisplay } from './components/CalculatorDisplay';
 import { CalculatorLayout } from './components/CalculatorLayout';
+import { NumberKeypad } from './components/NumberKeypad';
 
 export function App() {
-  const keys = ['7', '8', '9', '+', '4', '5', '6', '-', '1', '2', '3', 'x', '0', '.', '=', '/'];
+  const [calculatorState, setCalculatorState] = useState(initialCalculatorState);
 
   return (
     <CalculatorLayout
-      display={<CalculatorDisplay state={initialCalculatorState} />}
+      display={<CalculatorDisplay state={calculatorState} />}
       keypad={
-        <>
-          {keys.map((key) => (
-            <button
-              className={`key-button ${['+', '-', 'x', '/', '='].includes(key) ? 'key-button--operator' : ''}`}
-              key={key}
-              type="button"
-            >
-              {key}
-            </button>
-          ))}
-        </>
+        <NumberKeypad
+          onDecimalPoint={() => setCalculatorState((state) => enterDecimalPoint(state))}
+          onDigit={(digit) => setCalculatorState((state) => enterDigit(state, digit))}
+        />
       }
     />
   );

@@ -12,7 +12,7 @@ export function CalculatorLayout({ display, keypad }: CalculatorLayoutProps) {
         <div className="calculator-display" aria-label="Calculator display">
           {display}
         </div>
-        <div className="key-grid" aria-label="Calculator keypad">
+        <div className="calculator-keypad" aria-label="Calculator keypad">
           {keypad}
         </div>
       </section>
