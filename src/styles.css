@@ -50,11 +50,11 @@
 
 @layer components {
   .app-shell {
-    @apply grid min-h-dvh place-items-center bg-canvas px-4 py-6 text-ink sm:px-8 sm:py-10;
+    @apply grid min-h-dvh place-items-center bg-canvas px-4 py-5 text-ink sm:px-8 sm:py-10;
   }
 
   .calculator-frame {
-    @apply grid w-full max-w-[24rem] gap-4 rounded-control border border-black/10 bg-panel p-3 shadow-flat sm:p-4;
+    @apply grid w-full max-w-[24rem] gap-3 rounded-control border border-black/10 bg-panel p-3 shadow-flat sm:gap-4 sm:p-4;
   }
 
   .calculator-display {
@@ -94,7 +94,13 @@
   }
 
   .key-button {
-    @apply flex aspect-square min-h-12 items-center justify-center rounded-control border border-black/10 bg-key text-lg font-semibold text-ink shadow-flat transition duration-100 hover:bg-key-hover active:translate-y-px active:shadow-none focus:outline-none focus:ring-2 focus:ring-operator focus:ring-offset-2 focus:ring-offset-canvas sm:text-xl;
+    @apply flex aspect-square min-h-12 select-none items-center justify-center rounded-control border border-black/10 bg-key text-lg font-semibold text-ink shadow-flat transition-[background-color,box-shadow,transform] duration-100 hover:-translate-y-0.5 hover:bg-key-hover active:translate-y-px active:shadow-none focus:outline-none focus:ring-2 focus:ring-operator focus:ring-offset-2 focus:ring-offset-canvas sm:text-xl;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .control-keypad .key-button {
+    @apply aspect-auto;
   }
 
   .key-button--operator {
@@ -103,5 +109,20 @@
 
   .key-button--control {
     @apply bg-panel text-muted hover:bg-key-hover;
+  }
+}
+
+@media (hover: none) {
+  .key-button:hover {
+    background: var(--color-key);
+    transform: none;
+  }
+
+  .key-button--operator:hover {
+    background: var(--color-operator);
+  }
+
+  .key-button--control:hover {
+    background: var(--color-panel);
   }
 }
