@@ -1,16 +1,23 @@
-import './App.css';
-
 export function App() {
+  const keys = ['7', '8', '9', '+', '4', '5', '6', '-', '1', '2', '3', 'x', '0', '.', '=', '/'];
+
   return (
     <main className="app-shell">
-      <section className="app-shell__content" aria-labelledby="app-shell-title">
-        <p className="app-shell__eyebrow">Ready</p>
-        <h1 className="app-shell__title" id="app-shell-title">
-          Empty app shell
-        </h1>
-        <p className="app-shell__body">
-          React, TypeScript, Vite, linting, and formatting are configured for feature work.
-        </p>
+      <section className="calculator-surface" aria-label="Calculator shell">
+        <div className="calculator-display" aria-label="Calculator display">
+          0
+        </div>
+        <div className="key-grid" aria-label="Calculator controls">
+          {keys.map((key) => (
+            <button
+              className={`key-button ${['+', '-', 'x', '/', '='].includes(key) ? 'key-button--operator' : ''}`}
+              key={key}
+              type="button"
+            >
+              {key}
+            </button>
+          ))}
+        </div>
       </section>
     </main>
   );
