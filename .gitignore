@@ -3,5 +3,7 @@ dist
 .env
 .env.local
 .gh_token
+playwright-report
+test-results
 .DS_Store
 npm-debug.log*
