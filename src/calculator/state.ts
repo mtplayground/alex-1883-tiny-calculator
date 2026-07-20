@@ -41,6 +41,59 @@ export function enterDigit(state: CalculatorState, digit: string): CalculatorSta
   };
 }
 
+export function enterDecimalPoint(state: CalculatorState): CalculatorState {
+  if (state.shouldReplaceEntry || state.currentEntry === errorEntry) {
+    return {
+      ...state,
+      currentEntry: '0.',
+      shouldReplaceEntry: false,
+    };
+  }
+
+  if (state.currentEntry.includes('.')) {
+    return state;
+  }
+
+  return {
+    ...state,
+    currentEntry: `${state.currentEntry}.`,
+  };
+}
+
+export function clearCalculator(): CalculatorState {
+  return initialCalculatorState;
+}
+
+export function resetCalculator(): CalculatorState {
+  return clearCalculator();
+}
+
+export function backspaceEntry(state: CalculatorState): CalculatorState {
+  if (state.currentEntry === errorEntry) {
+    return initialCalculatorState;
+  }
+
+  if (state.shouldReplaceEntry) {
+    return {
+      ...state,
+      currentEntry: '0',
+      shouldReplaceEntry: false,
+    };
+  }
+
+  if (state.currentEntry.length <= 1 || /^-?\d$/.test(state.currentEntry)) {
+    return {
+      ...state,
+      currentEntry: '0',
+    };
+  }
+
+  return {
+    ...state,
+    currentEntry: state.currentEntry.slice(0, -1),
+  };
+}
+
 export function chooseOperator(
   state: CalculatorState,
   operator: CalculatorOperator,
