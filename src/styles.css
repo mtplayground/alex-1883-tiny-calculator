@@ -73,6 +73,14 @@
     @apply min-w-0;
   }
 
+  .calculator-controls {
+    @apply min-w-0;
+  }
+
+  .control-keypad {
+    @apply grid grid-cols-3 gap-2 sm:gap-3;
+  }
+
   .calculator-keypad-grid {
     @apply grid grid-cols-[minmax(0,3fr)_minmax(3rem,1fr)] gap-2 sm:gap-3;
   }
@@ -91,5 +99,9 @@
 
   .key-button--operator {
     @apply bg-operator text-white hover:bg-operator-hover;
+  }
+
+  .key-button--control {
+    @apply bg-panel text-muted hover:bg-key-hover;
   }
 }
